@@ -4,10 +4,12 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<%@ include file="../common/heading.jsp" %>
 	<meta charset="UTF-8">
 	<title>User List</title>
 </head>
 <body>
+   	<%@ include file="../common/top.jsp" %>
 	<h3>사용자 리스트</h3>
 	<a href="/user/login">사용자 등록</a>
 	<a href="/user/logout">로그아웃</a>
@@ -38,5 +40,6 @@
 		</tr>
 		</c:forEach>
 	</table>
+	<%@ include file="../common/bottom.jsp" %>
 </body>
 </html>

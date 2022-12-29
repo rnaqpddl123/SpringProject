@@ -1,13 +1,14 @@
 package com.mulcam.SpringProject.entity;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class Board {
 	private int bid;
 	private String uid;
 	private String title;
 	private String content;
-	private LocalDate modTime;
+	private LocalDateTime modTime;
 	private String category;
 	private int price;
 	private String state;
@@ -19,7 +20,7 @@ public class Board {
 	private String uname;
 	
 	public Board() {}
-	public Board(int bid, String uid, String title, String content, LocalDate modTime, String category, int price,
+	public Board(int bid, String uid, String title, String content, LocalDateTime modTime, String category, int price,
 			String state, int viewCount, int replyCount, int likeCount, int isDeleted, String files, String uname) {
 		super();
 		this.bid = bid;
@@ -72,10 +73,10 @@ public class Board {
 	public void setContent(String content) {
 		this.content = content;
 	}
-	public LocalDate getModTime() {
+	public LocalDateTime getModTime() {
 		return modTime;
 	}
-	public void setModTime(LocalDate modTime) {
+	public void setModTime(LocalDateTime modTime) {
 		this.modTime = modTime;
 	}
 	public String getCategory() {
