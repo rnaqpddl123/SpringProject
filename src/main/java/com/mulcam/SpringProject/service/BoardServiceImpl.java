@@ -20,14 +20,32 @@ public class BoardServiceImpl implements BoardService {
 	private BoardDao boardDao;
 	
 	@Override
-	public List<Board> getList() {
-		List<Board> list = boardDao.getlist();
+	public List<Board> getList(String field, String query, String state, String category, int offset) {
+		List<Board> list = boardDao.getlist(field, query,state, category,offset);
 		return list;
 	}
 
 	@Override
 	public void write(Board b) {
 		boardDao.write(b);
+	}
+
+	
+	@Override
+	public void increaseViewCount(int bid) {
+		boardDao.increaseViewCount(bid);
+	}
+
+	@Override
+	public Board getBoardDetail(int bid) {
+		Board board = boardDao.getBoardDetail(bid);
+		return board;
+	}
+
+	@Override
+	public int getBoardCount(String field, String query) {
+		int count = boardDao.getBoardCount(field,query);
+		return count;
 	}
 	
 }

@@ -3,6 +3,7 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
+<%@ include file="../common/heading.jsp"%>
 <style>
 th, td {
 	text-align: center;
@@ -13,6 +14,7 @@ th, td {
 </head>
 
 <body>
+	<%@ include file="../common/top.jsp"%>
 	<h3>
 		<strong>로그인</strong> 
 		<span style="font-size: 0.6em;">
@@ -40,5 +42,6 @@ th, td {
 			</tr>
 		</table>
 	</form>
+	<%@ include file="../common/bottom.jsp"%>	
 </body>
 </html>

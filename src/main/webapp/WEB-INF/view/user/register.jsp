@@ -3,10 +3,12 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<%@ include file="../common/heading.jsp" %>
 	<meta charset="UTF-8">
 	<title>사용자 등록</title>
 </head>
 <body>
+   	<%@ include file="../common/top.jsp" %>
 	<h3>사용자 등록</h3>
 	<hr>
 	<form action="/user/register" method="post">
@@ -44,5 +46,6 @@
 			</tr>
 		</table>
 	</form>
+    <%@ include file="../common/bottom.jsp" %>
 </body>
 </html>

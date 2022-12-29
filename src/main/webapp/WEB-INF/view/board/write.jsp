@@ -2,15 +2,17 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
+	<%@ include file="../common/heading.jsp" %>
     <style>
         th, td { text-align: center; }
     </style>
 </head>
 
 <body>
-
+   	<%@ include file="../common/top.jsp" %>
     <div class="container" style="margin-top: 80px;">
         <div class="row">
+        	<%@ include file="../common/aside.jsp" %>
             <!-- 나머지는 공통이니까 main부분만 고치면됨 -->
             <!-- =============================main=========================== -->
             <div class="col-sm-9">
@@ -22,16 +24,27 @@
 			        	<!-- enctype="multipart/form-data"는 첨부파일 인코딩을 위해서 넣어주어야함 -->
 			            <form action="/board/write" method="post" enctype="multipart/form-data">
 			            	<input type="hidden" name="uid" value="${uid}">
-			            	<input type="hidden" name="category" value="디지털/가전">
-			            	<input type="hidden" name="state" value="판매">
 			                <table class="table table-borderless">
 			                    <tr>
 			                        <td><label for="title">제목</label></td>
 			                        <td colspan="2"><input class="form-control" type="text" name="title" id="title"></td>
 			                    </tr>
-			                     <tr>
+			                    <tr>
 			                        <td><label for="title">가격</label></td>
 			                        <td colspan="2"><input class="form-control" type="number" name="price" id="price"></td>
+			                    </tr>
+			                    <tr>
+			                        <td><label for="category">카테고리</label></td>
+			                        <td style="text-align: left">
+			                        <input class="ms-2" type="radio" name="category" value="디지털/가전">디지털/가전
+			                        <input class="ms-2" type="radio" name="category" value="의류">의류
+			                        <input class="ms-2" type="radio" name="category" value="식품">식품</td>
+			                    </tr>
+			                    <tr>
+			                        <td><label for="state">판매/구매</label></td>
+			                        <td style="text-align: left" >
+			                        <input class="ms-2" type="radio" name="state" value="판매">판매
+			                        <input class="ms-2" type="radio" name="state" value="구매">구매</td>
 			                    </tr>
 			                    <tr>
 			                        <td><label for="content">내용</label></td>
@@ -60,5 +73,6 @@
             <!-- ================main========================= -->
         </div>
     </div>
+	<%@ include file="../common/bottom.jsp" %>
 </body>
 </html>

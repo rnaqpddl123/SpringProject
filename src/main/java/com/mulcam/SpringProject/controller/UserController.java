@@ -3,6 +3,7 @@ package com.mulcam.SpringProject.controller;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,29 +27,27 @@ public class UserController {
 	@Autowired
 	private UserService service;
 	
-	
+	@RequestMapping("/list")
+	public String list(Model model) {
+		List<User> list = service.getList();
+		model.addAttribute("userList", list);
+		return "user/list";
+	}
 	
 	@GetMapping("/login")
 	public String loginform() {
 		return "user/login";
 	}
 	
-	@RequestMapping("/list")
-	public String list(Model model) {
-		List<User> list = service.getList();
-		model.addAttribute("userList", list);
-		model.addAttribute("sessionUid", userSession.getUid());
-		model.addAttribute("sessionUname", userSession.getUname());
-		return "user/list";
-	}
-	
 	@PostMapping("/login")
-	public String login(HttpServletRequest req, Model model) {
+	public String login(HttpServletRequest req, Model model, HttpSession session) {
 		String uid = req.getParameter("uid").strip();
 		String pwd = req.getParameter("pwd").strip();
 		int result = service.login(uid,pwd);
 		switch (result) {
 		case UserService.CORRECT_LOGIN :
+			session.setAttribute("sessionUid", uid);
+			session.setAttribute("sessionUname", userSession.getUname());
 			return "redirect:/board/list";
 		case UserService.WRONG_PASSWORD :
 			return "user/login";
@@ -88,9 +87,10 @@ public class UserController {
 	}
 	
 	@RequestMapping("/logout")
-	public String logout() {
-		userSession.setUid("");
-		userSession.setUname("");
+	public String logout(HttpSession session) {
+		session.invalidate();
+//		userSession.setUid("");
+//		userSession.setUname("");
 		return "redirect:/user/list";
 	}
 

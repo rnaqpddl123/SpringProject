@@ -10,6 +10,7 @@ import org.springframework.web.context.WebApplicationContext;
 public class UserSession {
 	private String uid;
 	private String uname;
+	private int currentBoardPage;
 	
 	
 	public String getUid() {
@@ -24,8 +25,17 @@ public class UserSession {
 	public void setUname(String uname) {
 		this.uname = uname;
 	}
+	public int getCurrentBoardPage() {
+		return currentBoardPage;
+	}
+	public void setCurrentBoardPage(int currentBoardPage) {
+		this.currentBoardPage = currentBoardPage;
+	}
+	
 	@Override
 	public String toString() {
-		return "UserSession [uid=" + uid + ", uname=" + uname + "]";
+		return "UserSession [uid=" + uid + ", uname=" + uname + ", currentBoardPage=" + currentBoardPage + "]";
 	}
+	
+
 }
