@@ -42,6 +42,21 @@
                         	<a href="/bbs/board/FileDownload?file=${file}" class="me-2" >${file}</a>
                         </c:forEach>
                         </h6>
+                        <c:if test="${(likeExist eq 0) and (not empty sessionUid)}">
+                        <h6><a href="/board/likeCount?bid=${board.bid}&uid=${board.uid}&love=1">
+                        	<span class="badge bg-warning"><i class="fa-regular fa-heart"></i>찜${board.likeCount}
+                        </span></a></h6>
+                        </c:if>
+                       <c:if test="${(likeExist eq 1) and (not empty sessionUid)}">
+                        <h6><a href="/board/likeCount?bid=${board.bid}&uid=${board.uid}&love=-1">
+                        	<span class="badge bg-secondary"><i class="fa-regular fa-heart"></i>찜${board.likeCount}
+                        </span></a></h6>
+                        </c:if>
+                        <c:if test="${empty sessionUid}">
+                        <h6>
+                        	<span class="badge bg-secondary"><i class="fa-regular fa-heart"></i>찜${board.likeCount}
+                        </span></h6>
+                        </c:if>
                     </div>
                     <div class="col-4 text-end">
                         <h5>${board.uname}</h5>

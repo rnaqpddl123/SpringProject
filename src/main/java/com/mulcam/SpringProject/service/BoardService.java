@@ -20,4 +20,12 @@ public interface BoardService {
 
 	int getLikeCount(String uid);
 
+	int getLikeExist(int bid, String uid);
+
+	void likeCountChange(int bid, int love);
+
+	void addLikeBoard(String uid, int bid);
+
+	void removeLikeBoard(String uid, int bid);
+
 }

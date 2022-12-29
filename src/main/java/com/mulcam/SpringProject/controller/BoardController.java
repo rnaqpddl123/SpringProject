@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.mulcam.SpringProject.entity.Board;
 import com.mulcam.SpringProject.service.BoardService;
@@ -55,18 +56,9 @@ public class BoardController {
 		
 		String today = LocalDate.now().toString();
 		model.addAttribute("today", today);
-		System.out.println("현재날짜" + today);
-		System.out.println(list.get(0).getModTime());
-		System.out.println(list.get(1).getModTime());
-		System.out.println(list.get(2).getModTime());
-//		for (Board a : list) {
-//			System.out.println(a.getModTime());
-//		}
 		
 		model.addAttribute("boardList", list);
 		session.setAttribute("currentBoardPage", currentBoardPage);
-//		model.addAttribute("currentBoardPage", page);
-//		model.addAttribute("uid",userSession.getUid());
 		return "board/list";
 	}
 	
@@ -128,13 +120,35 @@ public class BoardController {
 			service.increaseViewCount(bid);
 		
 		Board board = service.getBoardDetail(bid);
+		// 해당유저가 찜을 눌렀는지 안눌렀는지 판단
+		int likeExist = service.getLikeExist(bid,userSession.getUid());
 		
+		System.out.println("좋아요 확인 : " + likeExist );
+		model.addAttribute("likeExist",likeExist);
 		model.addAttribute("board", board);
 		model.addAttribute("uid",userSession.getUid());
 		return "board/detail";
 	}
 	
-	
+	// 찜버튼 눌르기
+	@GetMapping("/likeCount")
+	public String likeCount(HttpServletRequest req,Model model, RedirectAttributes redirect) {
+		// love파라메터가 1이면 likecount도 +1 ,  -1면 likeCount도 -1
+		int bid = Integer.parseInt((String)req.getParameter("bid"));
+		int love = Integer.parseInt(req.getParameter("love"));
+		System.out.println(userSession.getUid());
+		service.likeCountChange(bid, love);
+		
+		// love파라메터가 1이면 likeProduct에 추가 ,  -1이면 likeproduct에서 제거
+		if (love ==1)
+			service.addLikeBoard(userSession.getUid(), bid);
+		else
+			service.removeLikeBoard(userSession.getUid(), bid);
+		
+		redirect.addAttribute("bid", bid);
+		redirect.addAttribute("uid", req.getParameter("uid"));
+		return "redirect:/board/detail";
+	}
 	
 	@PostMapping("/upload")
 	public String upload(@RequestParam("uploadfile") MultipartFile uploadfile, Model model) {

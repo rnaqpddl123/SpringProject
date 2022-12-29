@@ -2,6 +2,7 @@ package com.mulcam.SpringProject.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -59,6 +60,18 @@ public interface BoardDao {
 			+ " JOIN users AS u ON u.uid=l.uid"
 			+ "	WHERE l.uid = #{uid}")
 	int getLikeCount(String uid);
+	
+	@Select("SELECT COUNT(*) FROM likeproduct WHERE bid=#{bid} AND uid=#{uid}") 
+	int getLikeExist(int bid, String uid);
+	
+	@Update("UPDATE board SET likeCount=likeCount+#{love} WHERE bid=#{bid};")
+	void likeCountChange(int bid, int love);
+
+	@Insert("INSERT INTO likeproduct VALUES (#{uid}, #{bid})")
+	void addLikeBoard(String uid, int bid);
+
+	@Delete("DELETE FROM likeproduct WHERE uid=#{uid} AND bid=#{bid};")
+	void removeLikeBoard(String uid, int bid);
 	
 	
 	

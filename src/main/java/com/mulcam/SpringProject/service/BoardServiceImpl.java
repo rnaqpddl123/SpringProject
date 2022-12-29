@@ -61,4 +61,27 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	
+	@Override
+	public int getLikeExist(int bid, String uid) {
+		int exist = boardDao.getLikeExist(bid, uid);
+		return exist;
+	}
+
+	@Override
+	public void likeCountChange(int bid, int love) {
+		boardDao.likeCountChange(bid, love);
+	}
+
+	@Override
+	public void addLikeBoard(String uid, int bid) {
+		boardDao.addLikeBoard(uid,bid);
+		
+	}
+
+	@Override
+	public void removeLikeBoard(String uid, int bid) {
+		boardDao.removeLikeBoard(uid,bid);
+	}
+
+	
 }
