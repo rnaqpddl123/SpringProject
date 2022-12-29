@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.mulcam.SpringProject.entity.Board;
+import com.mulcam.SpringProject.entity.Reply;
 import com.mulcam.SpringProject.service.BoardService;
 import com.mulcam.SpringProject.session.UserSession;
 
@@ -113,7 +114,7 @@ public class BoardController {
 	
 	// 게시글보기
 	@GetMapping("/detail")
-	public String detail(HttpServletRequest req, Model model) {
+	public String detail(HttpServletRequest req, Model model, HttpSession session) {
 		int bid = Integer.parseInt((String)req.getParameter("bid"));
 		String uid = req.getParameter("uid");
 		if (req.getParameter("option")==null && (!uid.equals(userSession.getUid()))) 
@@ -123,14 +124,21 @@ public class BoardController {
 		// 해당유저가 찜을 눌렀는지 안눌렀는지 판단
 		int likeExist = service.getLikeExist(bid,userSession.getUid());
 		
-		System.out.println("좋아요 확인 : " + likeExist );
+		//리플
+		System.out.println("bid확인용" + bid);
+		List<Reply> replyList = service.replyList(bid);
+		for (Reply a : replyList) {			
+			System.out.println(a.getUname());
+			}
+		
+		model.addAttribute("replyList", replyList);
 		model.addAttribute("likeExist",likeExist);
 		model.addAttribute("board", board);
 		model.addAttribute("uid",userSession.getUid());
 		return "board/detail";
 	}
 	
-	// 찜버튼 눌르기
+	// 찜버튼 눌르기	
 	@GetMapping("/likeCount")
 	public String likeCount(HttpServletRequest req,Model model, RedirectAttributes redirect) {
 		// love파라메터가 1이면 likecount도 +1 ,  -1면 likeCount도 -1
@@ -144,12 +152,32 @@ public class BoardController {
 			service.addLikeBoard(userSession.getUid(), bid);
 		else
 			service.removeLikeBoard(userSession.getUid(), bid);
-		
 		redirect.addAttribute("bid", bid);
 		redirect.addAttribute("uid", req.getParameter("uid"));
 		return "redirect:/board/detail";
 	}
 	
+	// 리플
+	@PostMapping("/reply")
+	public String reply(HttpServletRequest req, Model model, HttpSession session) {
+		String content = req.getParameter("content");
+		int bid = Integer.parseInt(req.getParameter("bid"));
+		String uid = req.getParameter("uid"); // 게시글의 uid
+		
+		// 게시글의 uid와 댓글을 쓰려고 하는 사람의 uid가 같으면 isMine이 1
+		String sessionUid = (String) session.getAttribute("sessionUid");
+		int isMine = (uid.equals(sessionUid)) ? 1 : 0;
+		
+		Reply reply = new Reply(content, isMine, sessionUid, bid);
+		service.insertReply(reply);
+		service.increaseReplyCount(bid);
+		return "redirect:/board/detail?bid=" + bid + "&uid=" + uid + "&option=DNI";	// Do Not Increase
+	}
+	
+	
+	
+	
+	// TODO: 이미지 파일 업로드 
 	@PostMapping("/upload")
 	public String upload(@RequestParam("uploadfile") MultipartFile uploadfile, Model model) {
 		

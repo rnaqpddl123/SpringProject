@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.mulcam.SpringProject.dao.BoardDao;
+import com.mulcam.SpringProject.dao.ReplyDao;
 import com.mulcam.SpringProject.entity.Board;
+import com.mulcam.SpringProject.entity.Reply;
 import com.mulcam.SpringProject.session.UserSession;
 
 @Service
@@ -18,6 +20,9 @@ public class BoardServiceImpl implements BoardService {
 	
 	@Autowired
 	private BoardDao boardDao;
+	
+	@Autowired
+	private ReplyDao replyDao;
 	
 	@Override
 	public List<Board> getList(String field, String query, String state, String category, int offset) {
@@ -60,7 +65,6 @@ public class BoardServiceImpl implements BoardService {
 		return count;
 	}
 
-	
 	@Override
 	public int getLikeExist(int bid, String uid) {
 		int exist = boardDao.getLikeExist(bid, uid);
@@ -81,6 +85,23 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public void removeLikeBoard(String uid, int bid) {
 		boardDao.removeLikeBoard(uid,bid);
+	}
+
+	@Override
+	public void insertReply(Reply reply) {
+		replyDao.insertReply(reply);
+	}
+
+	@Override
+	public void increaseReplyCount(int bid) {
+		String field = "replyCount";
+		boardDao.increaseCount(bid, field);
+	}
+
+	@Override
+	public List<Reply> replyList(int bid) {
+		List<Reply>	list = replyDao.replyList(bid);
+		return list;
 	}
 
 	
