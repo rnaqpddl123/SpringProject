@@ -75,9 +75,6 @@ public class BoardController {
 		int currentBoardPage = (req.getParameter("p")==null || req.getParameter("p")=="") ? 1 : Integer.parseInt(req.getParameter("p"));
 		int offset = (currentBoardPage-1)*10;
 		List<Board> list = service.getLikeList(userSession.getUid() ,offset);
-		
-		
-		
 		// pagenation
 		int totalBoardNum = service.getLikeCount(userSession.getUid());
 		int totalPages = (int)Math.ceil(totalBoardNum/10.);
