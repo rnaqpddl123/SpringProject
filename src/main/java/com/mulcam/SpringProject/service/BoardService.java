@@ -3,6 +3,7 @@ package com.mulcam.SpringProject.service;
 import java.util.List;
 
 import com.mulcam.SpringProject.entity.Board;
+import com.mulcam.SpringProject.entity.Reply;
 
 public interface BoardService {
 	
@@ -27,5 +28,11 @@ public interface BoardService {
 	void addLikeBoard(String uid, int bid);
 
 	void removeLikeBoard(String uid, int bid);
+
+	void insertReply(Reply reply);
+
+	void increaseReplyCount(int bid);
+
+	List<Reply> replyList(int bid);
 
 }

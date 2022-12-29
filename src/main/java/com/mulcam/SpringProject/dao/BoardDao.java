@@ -72,6 +72,10 @@ public interface BoardDao {
 
 	@Delete("DELETE FROM likeproduct WHERE uid=#{uid} AND bid=#{bid};")
 	void removeLikeBoard(String uid, int bid);
+
+	@Update("UPDATE board SET replyCount=replyCount+1  WHERE  bid=#{bid};")
+	void increaseCount(int bid, String field);
+
 	
 	
 	

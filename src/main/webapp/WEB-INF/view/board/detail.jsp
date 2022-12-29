@@ -19,11 +19,11 @@
             <div class="col-sm-9">
                 <h3><strong>게시글 상세 조회</strong>
                     <span style="font-size: 0.6em;">
-                        <a href="/bbs/board/list?p=${currentBoardPage}&f=&q=" class="ms-5""><i class="fas fa-list-ul"></i> 목록</a>
+                        <a href="/board/list?p=${currentBoardPage}&f=&q=" class="ms-5""><i class="fas fa-list-ul"></i> 목록</a>
                         <!-- 본인만 수정,삭제 가능 -->
                         <c:if test="${board.uid eq uid}">
-                        	<a href="/bbs/board/update?bid=${board.bid}" class="ms-3"><i class="far fa-edit"></i> 수정</a>
-                        	<a href="/bbs/board/delete?bid=${board.bid}" class="ms-3"><i class="fas fa-trash-alt"></i> 삭제</a>
+                        	<a href="/board/update?bid=${board.bid}" class="ms-3"><i class="far fa-edit"></i> 수정</a>
+                        	<a href="/board/delete?bid=${board.bid}" class="ms-3"><i class="fas fa-trash-alt"></i> 삭제</a>
                         </c:if>
                         <c:if test="${board.uid ne uid}">
                        	 	<a href="#" class="ms-3 disabled-link"><i class="far fa-edit"></i> 수정</a>
@@ -39,22 +39,22 @@
                         <h6>첨부파일
                         <c:forEach var="file" items="${fileList}">
                         	<!-- TODO: 파일 다운로드 완성 -->
-                        	<a href="/bbs/board/FileDownload?file=${file}" class="me-2" >${file}</a>
+                        	<a href="/board/FileDownload?file=${file}" class="me-2" >${file}</a>
                         </c:forEach>
                         </h6>
-                        <c:if test="${(likeExist eq 0) and (not empty sessionUid)}">
+                        <c:if test="${(likeExist eq 0) and (not empty sessionUid) and (sessionUid ne board.uid)}">
                         <h6><a href="/board/likeCount?bid=${board.bid}&uid=${board.uid}&love=1">
                         	<span class="badge bg-warning"><i class="fa-regular fa-heart"></i>찜${board.likeCount}
                         </span></a></h6>
                         </c:if>
-                       <c:if test="${(likeExist eq 1) and (not empty sessionUid)}">
+                       <c:if test="${(likeExist eq 1) and (not empty sessionUid) and (sessionUid ne board.uid)}">
                         <h6><a href="/board/likeCount?bid=${board.bid}&uid=${board.uid}&love=-1">
                         	<span class="badge bg-secondary"><i class="fa-regular fa-heart"></i>찜${board.likeCount}
                         </span></a></h6>
                         </c:if>
-                        <c:if test="${empty sessionUid}">
+                        <c:if test="${(empty sessionUid) or(sessionUid eq board.uid)}">
                         <h6>
-                        	<span class="badge bg-secondary"><i class="fa-regular fa-heart"></i>찜${board.likeCount}
+                        	<span class="badge bg-warning"><i class="fa-regular fa-heart"></i>찜${board.likeCount}
                         </span></h6>
                         </c:if>
                     </div>
@@ -67,8 +67,7 @@
                     <div class="col-12">
                         ${fn:replace(board.content, newline, '<br>')}
                     </div>
-
-                    <%-- <div class="col-12"><hr></div>
+                    <div class="col-12"><hr></div>
                     <div class="col-12">
                     <c:forEach var="reply" items="${replyList}">
                     	<c:if test="${reply.isMine eq 0}">
@@ -92,8 +91,8 @@
                         </div> 
                         </c:if> 
                		</c:forEach>
-                            
-                        <form class="form-inline" action="/bbs/board/reply" method="post">
+                    <c:if test="${not empty sessionUid}">     
+                        <form class="form-inline" action="/board/reply" method="post">
                             <input type="hidden" name="bid" value="${board.bid}">     <!-- bid -->
                             <input type="hidden" name="uid" value="${board.uid}">     <!-- uid -->
                             <table class="table table-borderless mt-2">
@@ -110,7 +109,8 @@
                                 </tr>
                             </table>
                         </form>
-                    </div> --%>
+                    </c:if> 
+                    </div>
                 </div>
             </div>
         </div>
