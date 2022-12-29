@@ -70,6 +70,33 @@ public class BoardController {
 		return "board/list";
 	}
 	
+	@RequestMapping("/likeList")
+	public String likeList(HttpServletRequest req,Model model, HttpSession session) {
+		int currentBoardPage = (req.getParameter("p")==null || req.getParameter("p")=="") ? 1 : Integer.parseInt(req.getParameter("p"));
+		int offset = (currentBoardPage-1)*10;
+		List<Board> list = service.getLikeList(userSession.getUid() ,offset);
+		// pagenation
+		int totalBoardNum = service.getLikeCount(userSession.getUid());
+		int totalPages = (int)Math.ceil(totalBoardNum/10.);
+		int startPage = (int)Math.ceil((currentBoardPage-0.5)/10. -1 )*10 +1;
+		int endPage = Math.min(totalPages, startPage+9);
+		List<String> pageList = new ArrayList<>();
+		for (int i=startPage; i<=endPage; i++)
+			pageList.add(String.valueOf(i));
+		model.addAttribute("pageList", pageList);
+		model.addAttribute("startPage", startPage);
+		model.addAttribute("endPage", endPage);
+		model.addAttribute("totalPages", totalPages);
+		
+		String today = LocalDate.now().toString();
+		model.addAttribute("today", today);
+		System.out.println("현재날짜" + today);
+		
+		model.addAttribute("boardList", list);
+		session.setAttribute("currentBoardPage", currentBoardPage);
+		return "board/likeList";
+	}
+	
 	// 게시글 작성
 	@GetMapping("/write")
 	public String writeForm(Model model) {
@@ -108,6 +135,7 @@ public class BoardController {
 	}
 	
 	
+	
 	@PostMapping("/upload")
 	public String upload(@RequestParam("uploadfile") MultipartFile uploadfile, Model model) {
 		
@@ -116,6 +144,8 @@ public class BoardController {
 		
 		return null;
 	}
+	
+	
 	
 	
 }

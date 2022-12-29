@@ -24,6 +24,12 @@ public class BoardServiceImpl implements BoardService {
 		List<Board> list = boardDao.getlist(field, query,state, category,offset);
 		return list;
 	}
+	
+	@Override
+	public List<Board> getLikeList(String uid, int offset) {
+		List<Board> list = boardDao.getLikeList(uid,offset);
+		return list;
+	}
 
 	@Override
 	public void write(Board b) {
@@ -47,5 +53,12 @@ public class BoardServiceImpl implements BoardService {
 		int count = boardDao.getBoardCount(field,query);
 		return count;
 	}
+	
+	@Override
+	public int getLikeCount(String uid) {
+		int count = boardDao.getLikeCount(uid);
+		return count;
+	}
+
 	
 }
