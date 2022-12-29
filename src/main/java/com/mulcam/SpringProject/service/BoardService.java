@@ -16,4 +16,8 @@ public interface BoardService {
 
 	int getBoardCount(String field, String query);
 
+	List<Board> getLikeList(String uid, int offset);
+
+	int getLikeCount(String uid);
+
 }

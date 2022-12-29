@@ -24,7 +24,19 @@ public interface BoardDao {
 			+ "	LIMIT 10"
 			+ "	OFFSET #{offset}")
 	List<Board> getlist(String field, String query, String state, String category, int offset);
-
+	
+	@Select("SELECT b.bid, b.uid, b.title, b.modtime, b.files, b.category, b.price, b.state,"
+			+ "	b.viewCount, b.replycount, u.uname"
+			+ " 	FROM likeproduct AS l"
+			+ "	JOIN board AS b"
+			+ "	ON b.bid=l.bid"
+			+ "	JOIN users AS u"
+			+ "	ON u.uid=b.uid"
+			+ "	WHERE l.uid = #{uid}"
+			+ "	LIMIT 10"
+			+ "	OFFSET #{offset};")
+	List<Board> getLikeList(String uid, int offset);
+	
 	@Insert("insert into board values(default, #{uid}, #{title}, #{content}, default, default, default, default, #{files}, #{category}, #{price}, #{state}, default)")
 	void write(Board b);
 
@@ -41,6 +53,14 @@ public interface BoardDao {
 	@Select("SELECT COUNT(bid) FROM board AS b JOIN users as u ON b.uid=u.uid"
 			+ "	WHERE b.isDeleted=0 AND ${field} LIKE #{query}")
 	int getBoardCount(String field, String query);
+	
+	@Select("SELECT COUNT(b.bid) FROM likeproduct AS l "
+			+ " JOIN board AS b ON b.bid=l.bid "
+			+ " JOIN users AS u ON u.uid=l.uid"
+			+ "	WHERE l.uid = #{uid}")
+	int getLikeCount(String uid);
+	
+	
 	
 	
 
