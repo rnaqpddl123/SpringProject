@@ -74,4 +74,10 @@ public class UserServiceImpl implements UserService{
 		return UserService.UID_NOT_EXIST;
 	}
 
+	@Override
+	public User getUser(String uid) {
+		User user = userDao.getUser(uid);
+		return user;
+	}
+
 }

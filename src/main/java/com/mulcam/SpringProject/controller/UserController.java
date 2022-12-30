@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -75,6 +76,7 @@ public class UserController {
 		String email = req.getParameter("email").strip();
 		String addr = req.getParameter("addr").strip();
 		String phoneNum = req.getParameter("phoneNum").strip();
+		System.out.println("들어왔는지 확인용");
 		
 		if(pwd.equals(pwd2)) {
 			User u = new User(uid,pwd,uname,email,addr,phoneNum);
@@ -89,9 +91,22 @@ public class UserController {
 	@RequestMapping("/logout")
 	public String logout(HttpSession session) {
 		session.invalidate();
-//		userSession.setUid("");
-//		userSession.setUname("");
 		return "redirect:/user/list";
 	}
+	
+	@GetMapping("/update/{uid}")
+	public String updateForm(@PathVariable String uid, Model model) {
+		User user = service.getUser(uid);
+		model.addAttribute("user", user);
+		return "user/update";
+	}
+	
+	
+	@GetMapping("/delete/{uid}")
+	public String delete(@PathVariable String uid, Model model) {
+		model.addAttribute("uid", uid);
+		return "user/delete";
+	}
+	
 
 }
