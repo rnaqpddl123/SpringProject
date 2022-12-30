@@ -23,7 +23,12 @@ public class Reply {
 		this.bid = bid;
 	}
 
-
+	public Reply(int rid, String content) {
+		super();
+		this.rid = rid;
+		this.content = content;
+	}
+	
 	public Reply(String content, int isMine, String uid, int bid) {
 		super();
 		this.content = content;

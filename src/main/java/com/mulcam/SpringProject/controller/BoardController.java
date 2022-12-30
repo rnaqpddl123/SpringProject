@@ -117,8 +117,9 @@ public class BoardController {
 	public String detail(HttpServletRequest req, Model model, HttpSession session) {
 		int bid = Integer.parseInt((String)req.getParameter("bid"));
 		String uid = req.getParameter("uid");
+		int count = 1;
 		if (req.getParameter("option")==null && (!uid.equals(userSession.getUid()))) 
-			service.increaseViewCount(bid);
+			service.increaseViewCount(bid, count);
 		
 		Board board = service.getBoardDetail(bid);
 		// 해당유저가 찜을 눌렀는지 안눌렀는지 판단
@@ -140,7 +141,7 @@ public class BoardController {
 		// love파라메터가 1이면 likecount도 +1 ,  -1면 likeCount도 -1
 		int bid = Integer.parseInt((String)req.getParameter("bid"));
 		int love = Integer.parseInt(req.getParameter("love"));
-		System.out.println(userSession.getUid());
+		String pre = req.getParameter("pre");
 		service.likeCountChange(bid, love);
 		
 		// love파라메터가 1이면 likeProduct에 추가 ,  -1이면 likeproduct에서 제거
@@ -148,17 +149,24 @@ public class BoardController {
 			service.addLikeBoard(userSession.getUid(), bid);
 		else
 			service.removeLikeBoard(userSession.getUid(), bid);
-		redirect.addAttribute("bid", bid);
-		redirect.addAttribute("uid", req.getParameter("uid"));
-		return "redirect:/board/detail";
+		
+		
+		if (pre.equals("detail")) {		// 디테일에서 눌렀을떄
+			redirect.addAttribute("bid", bid);
+			redirect.addAttribute("uid", req.getParameter("uid"));
+			return "redirect:/board/detail";
+		} else {						// 찜목록에서 불렀을때
+			return "redirect:/board/likeList";
+		}
 	}
 	
-	// 리플
+	// 댓글 등록
 	@PostMapping("/reply")
 	public String reply(HttpServletRequest req, Model model, HttpSession session) {
 		String content = req.getParameter("content");
 		int bid = Integer.parseInt(req.getParameter("bid"));
 		String uid = req.getParameter("uid"); // 게시글의 uid
+		int count=1;
 		
 		// 게시글의 uid와 댓글을 쓰려고 하는 사람의 uid가 같으면 isMine이 1
 		String sessionUid = (String) session.getAttribute("sessionUid");
@@ -166,10 +174,44 @@ public class BoardController {
 		
 		Reply reply = new Reply(content, isMine, sessionUid, bid);
 		service.insertReply(reply);
-		service.increaseReplyCount(bid);
+		service.increaseReplyCount(bid, count);
 		return "redirect:/board/detail?bid=" + bid + "&uid=" + uid + "&option=DNI";	// Do Not Increase
 	}
 	
+	// 댓글수정
+	@PostMapping("/replyUpdate")
+	public String replyUpdate(HttpServletRequest req, Model model, HttpSession session) {
+		String content = req.getParameter("content");
+		int bid = Integer.parseInt(req.getParameter("bid"));
+		String uid = req.getParameter("uid"); // 게시글의 uid
+		int rid = Integer.parseInt(req.getParameter("rid"));
+		
+		// 게시글의 uid와 댓글을 쓰려고 하는 사람의 uid가 같으면 isMine이 1
+		
+		Reply reply = new Reply(rid, content);
+		service.updateReply(reply);
+		return "redirect:/board/detail?bid=" + bid + "&uid=" + uid + "&option=DNI";	// Do Not Increase
+	}
+	
+	//댓글 삭제
+	@GetMapping("/reply/delete")
+	public String replyDelete(HttpServletRequest req, Model model) {
+		String uid = req.getParameter("uid");
+		int rid = Integer.parseInt(req.getParameter("rid"));
+		int bid = Integer.parseInt(req.getParameter("bid"));
+		
+		int count = -1;
+		service.deleteReply(rid);
+		service.increaseReplyCount(bid, count);
+		return "redirect:/board/detail?bid=" + bid + "&uid=" + uid + "&option=DNI";
+	}
+	
+	// test
+	@GetMapping("/test")
+	public String test(Model model) {
+		model.addAttribute("bid", 30);
+		return "board/test";
+	}
 	
 	// TODO: 이미지 파일 업로드 
 	@PostMapping("/upload")

@@ -29,14 +29,13 @@
                 <table class="table table-sm table-borderless">
 	                <tr class="d-flex">
 	                    <td class="col-6" style="text-align: left;">
-	                        <h3><strong>관심 목록</strong></h3>
+	                        <h3><strong>찜한 상품</strong></h3>
 	                    </td>
 	                </tr>
                 </table>
                 <hr>
                 <table class="table mt-2">
                     <tr class="table-secondary ">
-                        <th class="col-1">번호</th>
                         <th class="col-1">카테고리</th>
                         <th class="col-1">판매/구매</th>
                         <th class="col-3">제목</th>
@@ -44,10 +43,10 @@
                         <th class="col-2">글쓴이</th>
                         <th class="col-2">날짜/시간</th>
                         <th class="col-1">조회수</th>
+                        <th class="col-1">찜 삭제</th>
                     </tr>
                     <c:forEach var="board" items="${boardList}">
                     <tr>
-                        <td>${board.bid}</td>
                         <td>${board.category}</td>
                         <td>${board.state}</td>
                         <td><a href="/board/detail?bid=${board.bid}&uid=${board.uid}">${board.title}
@@ -67,6 +66,9 @@
                         </c:if>
                         </td>
                         <td>${board.viewCount}</td>
+                        <td><button onclick="location.href='/board/likeCount?bid=${board.bid}&uid=${board.uid}&love=-1&pre=likeLIst'" class="badge bg-secondary">
+                        	<i class="fa-regular fa-heart"></i>찜삭제${board.likeCount}
+                        </button></td>
                     </tr>
                     </c:forEach>         
                 </table>

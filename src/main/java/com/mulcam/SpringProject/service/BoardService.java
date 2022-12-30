@@ -11,7 +11,7 @@ public interface BoardService {
 
 	void write(Board b);
 
-	void increaseViewCount(int bid);
+	void increaseViewCount(int bid, int count);
 
 	Board getBoardDetail(int bid);
 
@@ -31,8 +31,12 @@ public interface BoardService {
 
 	void insertReply(Reply reply);
 
-	void increaseReplyCount(int bid);
+	void increaseReplyCount(int bid, int count);
 
 	List<Reply> replyList(int bid);
+
+	void updateReply(Reply reply);
+
+	void deleteReply(int rid);
 
 }

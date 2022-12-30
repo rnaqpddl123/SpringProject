@@ -40,13 +40,7 @@ public class BoardServiceImpl implements BoardService {
 	public void write(Board b) {
 		boardDao.write(b);
 	}
-
 	
-	@Override
-	public void increaseViewCount(int bid) {
-		boardDao.increaseViewCount(bid);
-	}
-
 	@Override
 	public Board getBoardDetail(int bid) {
 		Board board = boardDao.getBoardDetail(bid);
@@ -72,11 +66,6 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public void likeCountChange(int bid, int love) {
-		boardDao.likeCountChange(bid, love);
-	}
-
-	@Override
 	public void addLikeBoard(String uid, int bid) {
 		boardDao.addLikeBoard(uid,bid);
 		
@@ -93,15 +82,37 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public void increaseReplyCount(int bid) {
+	public void likeCountChange(int bid, int love) {
+		String field = "likeCount";
+		boardDao.increaseCount(bid, love, field);
+	}
+	
+	@Override
+	public void increaseReplyCount(int bid, int count) {
 		String field = "replyCount";
-		boardDao.increaseCount(bid, field);
+		boardDao.increaseCount(bid, count, field);
+	}
+	
+	@Override
+	public void increaseViewCount(int bid, int count) {
+		String field = "viewCount";
+		boardDao.increaseCount(bid, count, field);
 	}
 
 	@Override
 	public List<Reply> replyList(int bid) {
 		List<Reply>	list = replyDao.replyList(bid);
 		return list;
+	}
+
+	@Override
+	public void updateReply(Reply reply) {
+		replyDao.updateReply(reply);
+	}
+
+	@Override
+	public void deleteReply(int rid) {
+		replyDao.deleteReply(rid);
 	}
 
 }
