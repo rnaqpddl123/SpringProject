@@ -14,7 +14,6 @@
     		const query = document.getElementById("query").value;
     		const state = document.getElementById("state").value;
     		const category = document.getElementById("category").value;
-    		console.log("search()", field, query, state, category);
     		location.href = "/board/list?p=${currentBoardPage}&f=" + field + "&q=" + query + "&state=" + state + "&category=" + category;
     	}
     </script>
@@ -59,7 +58,7 @@
 	                        <select class="form-select me-2" name="f" id="field">
 	                            <option value="b.title" selected>제목</option>
 	                            <option value="b.content">본문</option>
-	                            <option value="b.uname">글쓴이</option>
+	                            <option value="u.uname">글쓴이</option>
 	                        </select>
 	                    </td>
 	                    <td class="col-3">

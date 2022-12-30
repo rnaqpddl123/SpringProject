@@ -125,11 +125,7 @@ public class BoardController {
 		int likeExist = service.getLikeExist(bid,userSession.getUid());
 		
 		//리플
-		System.out.println("bid확인용" + bid);
 		List<Reply> replyList = service.replyList(bid);
-		for (Reply a : replyList) {			
-			System.out.println(a.getUname());
-			}
 		
 		model.addAttribute("replyList", replyList);
 		model.addAttribute("likeExist",likeExist);
@@ -173,8 +169,6 @@ public class BoardController {
 		service.increaseReplyCount(bid);
 		return "redirect:/board/detail?bid=" + bid + "&uid=" + uid + "&option=DNI";	// Do Not Increase
 	}
-	
-	
 	
 	
 	// TODO: 이미지 파일 업로드 

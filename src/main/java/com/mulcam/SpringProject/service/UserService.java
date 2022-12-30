@@ -23,6 +23,8 @@ public interface UserService {
 	int login(String uid, String pwd);
 
 	List<User> getList();
+
+	User getUser(String uid);
 	
 
 }
