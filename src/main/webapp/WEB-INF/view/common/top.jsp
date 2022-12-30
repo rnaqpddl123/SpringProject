@@ -27,7 +27,7 @@
        <c:if test="${not empty sessionUid}">
        <span class="navbar-text me-3">${sessionUid}님 환영합니다.</span>
        <span class="navbar-text me-3">
-       		<a class="nav-link" href="/board/likeList"><i class="fas fa-sign-out-alt"></i>관심목록</a>
+       		<a class="nav-link" href="/board/likeList"><i class="fas fa-sign-out-alt"></i>찜한상품</a>
        </span>
        </c:if>
    </div>

@@ -27,8 +27,8 @@ public interface BoardDao {
 	List<Board> getlist(String field, String query, String state, String category, int offset);
 	
 	@Select("SELECT b.bid, b.uid, b.title, b.modtime, b.files, b.category, b.price, b.state,"
-			+ "	b.viewCount, b.replycount, u.uname"
-			+ " 	FROM likeproduct AS l"
+			+ "	b.viewCount, b.replycount, b.likeCount, u.uname"
+			+ " FROM likeproduct AS l"
 			+ "	JOIN board AS b"
 			+ "	ON b.bid=l.bid"
 			+ "	JOIN users AS u"
@@ -40,9 +40,6 @@ public interface BoardDao {
 	
 	@Insert("insert into board values(default, #{uid}, #{title}, #{content}, default, default, default, default, #{files}, #{category}, #{price}, #{state}, default)")
 	void write(Board b);
-
-	@Update("UPDATE board SET viewCount=viewCount+1 where bid=#{bid}")
-	void increaseViewCount(int bid);
 	
 	@Select("SELECT b.bid, b.uid, b.title, b.content, b.modtime, b.category, b.price, b.state,"
 			+ "b.viewCount, b.replycount, b.likeCount,b.files, u.uname FROM board AS b"
@@ -63,18 +60,24 @@ public interface BoardDao {
 	
 	@Select("SELECT COUNT(*) FROM likeproduct WHERE bid=#{bid} AND uid=#{uid}") 
 	int getLikeExist(int bid, String uid);
-	
-	@Update("UPDATE board SET likeCount=likeCount+#{love} WHERE bid=#{bid};")
-	void likeCountChange(int bid, int love);
 
 	@Insert("INSERT INTO likeproduct VALUES (#{uid}, #{bid})")
 	void addLikeBoard(String uid, int bid);
 
 	@Delete("DELETE FROM likeproduct WHERE uid=#{uid} AND bid=#{bid};")
 	void removeLikeBoard(String uid, int bid);
-
-	@Update("UPDATE board SET replyCount=replyCount+1  WHERE  bid=#{bid};")
-	void increaseCount(int bid, String field);
+	
+//	@Update("UPDATE board SET likeCount=likeCount+#{love} WHERE bid=#{bid};")
+//	void likeCountChange(int bid, int love);
+//
+//	@Update("UPDATE board SET replyCount=replyCount+#{count} WHERE  bid=#{bid};")
+//	void increaseReplyCount(int bid, int count);
+//	
+//	@Update("UPDATE board SET viewCount=viewCount+#{count} where bid=#{bid}")
+//	void increaseViewCount(int bid, int count);
+//	
+	@Update("UPDATE board SET ${field}=${field}+#{count} where bid=#{bid}")
+	void increaseCount(int bid, int count, String field);
 
 	
 	

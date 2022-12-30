@@ -2,9 +2,11 @@ package com.mulcam.SpringProject.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import com.mulcam.SpringProject.entity.Reply;
 
@@ -20,5 +22,11 @@ public interface ReplyDao {
 	
 	@Insert("INSERT INTO reply VALUES (default, #{content}, default, #{isMine}, #{uid}, #{bid})")
 	void insertReply(Reply reply);
+
+	@Update("UPDATE reply SET content=#{content}, regDate = DEFAULT WHERE rid=#{rid}")
+	void updateReply(Reply reply);
+
+	@Delete("Delete from reply WHERE rid=#{rid}; ")
+	void deleteReply(int rid);
 
 }
