@@ -6,13 +6,11 @@
 <head>
 	<%@ include file="../common/heading.jsp" %>
 	<meta charset="UTF-8">
-	<title>User List</title>
+	<title>관리자 페이지</title>
 </head>
 <body>
    	<%@ include file="../common/top.jsp" %>
-	<h3>사용자 리스트</h3>
-	<a href="/user/login">사용자 등록</a>
-	<a href="/user/logout">로그아웃</a>
+	<h3>회원리스트 (관리자 전용)</h3>
 	<hr>
 	${sessionUname}님 환영합니다.
 	<table border="1">
@@ -34,12 +32,12 @@
 			<td>${user.isDeleted}</td>	
 			<td>${user.delDate}</td>
 			<td>
-				<button onclick="location.href='/user/update/${user.uid}'">수정</button>
 				<button onclick="location.href='/user/delete/${user.uid}'">삭제</button>
 			</td>				
 		</tr>
 		</c:forEach>
 	</table>
+	<button onclick="location.href='/user/list/1'">탈퇴회원 보기</button>
 	<%@ include file="../common/bottom.jsp" %>
 </body>
 </html>

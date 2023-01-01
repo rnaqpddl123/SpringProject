@@ -24,7 +24,15 @@ public class UserServiceImpl implements UserService{
 
 	@Override
 	public List<User> getList() {
-		List<User> list = userDao.getList();
+		String isDeleted_ = "%%";
+		List<User> list = userDao.getList(isDeleted_);
+		return list;
+	}
+	
+	@Override
+	public List<User> getWithdrawList(String isDeleted) {
+		String isDeleted_ = "%" + isDeleted + "%";
+		List<User> list = userDao.getList(isDeleted_);
 		return list;
 	}
 
@@ -99,7 +107,5 @@ public class UserServiceImpl implements UserService{
 	public void withdraw(String uid) {
 		userDao.withdraw(uid);
 	}
-	
-	
 
 }

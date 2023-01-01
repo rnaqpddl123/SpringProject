@@ -14,7 +14,7 @@
            </li>
            <c:if test="${sessionUid eq 'admin'}">
            <li class="nav-item ms-3">
-               <a class="nav-link ${(menu eq 'user') ? 'active' : 'null'}" href="/user/list?p=1"><i class="fas fa-user-friends"></i>관리자 페이지</a>
+               <a class="nav-link ${(menu eq 'user') ? 'active' : 'null'}" href="/user/list/0"><i class="fas fa-user-friends"></i>관리자 페이지</a>
            </li>
            </c:if>
            <c:if test="${(sessionUid ne 'admin') and (not empty sessionUid)}">
