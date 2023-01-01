@@ -28,19 +28,28 @@ public class UserController {
 	@Autowired
 	private UserService service;
 	
-	@GetMapping("/list")
-	public String list(Model model) {
+	//=================================== 회원 리스트(관리자 전용) ===========================================	
+	@RequestMapping("/list/{isDeleted}")
+	public String list(@PathVariable String isDeleted, Model model) {
 		String uid = userSession.getUid();
+		System.out.println(uid);
 		if ((uid !=null) && (uid.equals("admin"))) {
-			List<User> list = service.getList();
-			model.addAttribute("userList", list);
-			return "user/list";
+			if (isDeleted.equals("1")) {
+				List<User> list = service.getWithdrawList(isDeleted);
+				model.addAttribute("userList", list);
+				return "user/list";
+			}
+			else {
+				List<User> list = service.getList();
+				model.addAttribute("userList", list);
+				return "user/list";
+			}
 		}
 		else 
 			return "redirect:/board/list";
-		
 	}
 	
+	//=================================== 로그인, 로그아웃 ===========================================	
 	@GetMapping("/login")
 	public String loginform() {
 		return "user/login";
@@ -65,7 +74,13 @@ public class UserController {
 		}
 	}
 	
+	@GetMapping("/logout")
+	public String logout(HttpSession session) {
+		session.invalidate();
+		return "redirect:/board/list";
+	}
 	
+	//=================================== 회원가입, 수정 ===========================================	
 	@GetMapping("/register")
 	public String registerForm() {
 		
@@ -100,12 +115,8 @@ public class UserController {
 		}
 	}
 	
-	@RequestMapping("/logout")
-	public String logout(HttpSession session) {
-		session.invalidate();
-		return "redirect:/user/list";
-	}
 	
+	//=================================== 회원탈퇴신청, 회원삭제(관리자 전용) ===========================================	
 	@GetMapping("/update/{uid}")
 	public String updateForm(@PathVariable String uid, Model model) {
 		User user = service.getUser(uid);
