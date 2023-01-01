@@ -28,29 +28,13 @@ public class UserServiceImpl implements UserService{
 		return list;
 	}
 
-//	@Override
-//	public User get(String uid) {
-//		User user = userDao.get(uid);
-//		return user;
-//	}
-//
 	@Override
 	public void register(User u) {
 		String cryptedPwd = BCrypt.hashpw(u.getPwd(), BCrypt.gensalt());
 		u.setPwd(cryptedPwd);
 		userDao.insert(u);
 	}
-//
-//	@Override
-//	public void update(User u) {
-//		userDao.update(u);	
-//	}
-//
-//	@Override
-//	public void delete(String uid) {
-//		userDao.delete(uid);
-//	}
-//
+
 	@Override
 	public int login(String uid, String pwd) {
 		try {
@@ -79,5 +63,43 @@ public class UserServiceImpl implements UserService{
 		User user = userDao.getUser(uid);
 		return user;
 	}
+
+	@Override
+	public void deleteUser(String uid) {
+		userDao.deleteUser(uid);
+	}
+
+	@Override
+	public void updateUser(User u) {
+		String cryptedPwd = BCrypt.hashpw(u.getPwd(), BCrypt.gensalt());
+		u.setPwd(cryptedPwd);
+		userDao.updateUser(u);
+	}
+
+	@Override
+	public int withdrawConfirm(String uid, String pwd) {
+		try {
+			User u = userDao.get(uid);
+
+			if (BCrypt.checkpw(pwd, u.getPwd())) {		// 비밀번호 같은지 비교(암호화해서)
+				// 회원탈퇴 성공
+				return UserService.CORRECT_LOGIN;
+			}
+			else {		
+				// 회원탈퇴 실패
+				return UserService.WRONG_PASSWORD;
+			}
+		} catch(Exception e) {
+			// uid가 없음
+		}
+		return UserService.UID_NOT_EXIST;
+	}
+
+	@Override
+	public void withdraw(String uid) {
+		userDao.withdraw(uid);
+	}
+	
+	
 
 }

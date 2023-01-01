@@ -26,7 +26,8 @@ public class BoardServiceImpl implements BoardService {
 	
 	@Override
 	public List<Board> getList(String field, String query, String state, String category, int offset) {
-		List<Board> list = boardDao.getlist(field, query,state, category,offset);
+		String uid = "%%";
+		List<Board> list = boardDao.getlist(uid, field, query,state, category,offset);
 		return list;
 	}
 	
@@ -113,6 +114,27 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public void deleteReply(int rid) {
 		replyDao.deleteReply(rid);
+	}
+
+	@Override
+	public void deleteBoard(int bid) {
+		boardDao.deleteBoard(bid);
+	}
+
+	@Override
+	public void updateBoard(Board b) {
+		boardDao.updateBoard(b);
+	}
+
+	@Override
+	public List<Board> getMyList(String uid, int offset) {
+		String field = "b.title";
+		String query = "%%";
+		String state = "%%";
+		String category = "%%";
+		uid = "%" + uid + "%";
+		List<Board> list = boardDao.getlist(uid, field, query, state, category, offset);
+		return list;
 	}
 
 }

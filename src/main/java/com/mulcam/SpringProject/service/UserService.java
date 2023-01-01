@@ -25,6 +25,14 @@ public interface UserService {
 	List<User> getList();
 
 	User getUser(String uid);
+
+	void deleteUser(String uid);
+
+	void updateUser(User u);
+
+	int withdrawConfirm(String uid, String pwd);
+
+	void withdraw(String uid);
 	
 
 }

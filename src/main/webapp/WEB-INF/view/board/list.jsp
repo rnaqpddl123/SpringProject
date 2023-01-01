@@ -16,6 +16,9 @@
     		const category = document.getElementById("category").value;
     		location.href = "/board/list?p=${currentBoardPage}&f=" + field + "&q=" + query + "&state=" + state + "&category=" + category;
     	}
+    	window.onload = function() {
+    		
+    	}
     </script>
 </head>
 
@@ -71,8 +74,8 @@
                 </table>
                 <hr>
                 <table class="table mt-2">
-                    <tr class="table-secondary ">
-                        <th class="col-1">번호</th>
+                    <tr class="table-secondary">
+                        <th class="col-1">썸네일</th>
                         <th class="col-1">카테고리</th>
                         <th class="col-1">판매/구매</th>
                         <th class="col-3">제목</th>
@@ -83,7 +86,9 @@
                     </tr>
                     <c:forEach var="board" items="${boardList}">
                     <tr>
-                        <td>${board.bid}</td>
+                        <%-- <td>${board.bid}</td> --%>
+                        <%-- <td><img style="height: 50px; width: 50px" src="/file/display?fileName=${fileList[0]}"></td> --%>
+                      	<td><img style="height: 50px; width: 50px" src="/file/thumbnail?jsonFiles=${board.bid}"></td>
                         <td>${board.category}</td>
                         <td>${board.state}</td>
                         <td><a href="/board/detail?bid=${board.bid}&uid=${board.uid}">${board.title}

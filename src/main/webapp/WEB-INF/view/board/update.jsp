@@ -1,4 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -23,16 +25,17 @@
 			        <div class="col-1"></div>
 			        <div class="col-10">
 			        	<!-- enctype="multipart/form-data"는 첨부파일 인코딩을 위해서 넣어주어야함 -->
-			            <form action="/board/write" method="post" enctype="multipart/form-data">
+			            <form action="/board/update" method="post" enctype="multipart/form-data">
 			            	<input type="hidden" name="uid" value="${uid}">
+			            	<input type="hidden" name="bid" value="${board.bid}">
 			                <table class="table table-borderless">
 			                    <tr>
 			                        <td><label for="title">제목</label></td>
-			                        <td colspan="2"><input class="form-control" type="text" name="title" id="title"></td>
+			                        <td colspan="2"><input class="form-control" type="text" name="title" id="title" value="${board.title}"></td>
 			                    </tr>
 			                    <tr>
 			                        <td><label for="title">가격</label></td>
-			                        <td colspan="2"><input class="form-control" type="number" name="price" id="price"></td>
+			                        <td colspan="2"><input class="form-control" type="number" name="price" id="price" value="${board.price}"></td>
 			                    </tr>
 			                    <tr>
 			                        <td><label for="category">카테고리</label></td>
@@ -50,12 +53,14 @@
 			                    <tr>
 			                    	<!-- TODO: 나중에 첨부파일수정  -->
 			                        <td><label for="files">첨부파일</label></td>
-			                        <td><input class="form-control" type="file" name="files" id="input-multiple-image" multiple></td>
+			                        <c:forEach var="file" items="${fileList}">
+			                        	<td><img style="height: 200px; width: 200px" src="/file/display?fileName=${file}"></td>
+			                        </c:forEach>
 			                    </tr>
 			                    <tr>
 			                        <td><label for="content">내용</label></td>
 			                        <td colspan="2">
-			                        	<textarea class="form-control" name="content" id="content" rows="10"></textarea>
+			                        	<textarea class="form-control" name="content" id="content" rows="10">${board.content}</textarea>
 			                        </td>
 			                    </tr>
 			                    <tr>
