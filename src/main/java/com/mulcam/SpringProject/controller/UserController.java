@@ -28,6 +28,7 @@ public class UserController {
 	@Autowired
 	private UserService service;
 	
+
 	//=================================== 회원 리스트(관리자 전용) ===========================================	
 	@RequestMapping("/list/{isDeleted}")
 	public String list(@PathVariable String isDeleted, Model model) {
@@ -47,6 +48,7 @@ public class UserController {
 		}
 		else 
 			return "redirect:/board/list";
+
 	}
 	
 	//=================================== 로그인, 로그아웃 ===========================================	
