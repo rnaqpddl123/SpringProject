@@ -27,7 +27,6 @@
     			document.getElementById('replyUpdate'+replyNum).className = 'form-inline d-none';
     		}
     	}
-    
     </script>
 </head>
 
@@ -57,12 +56,9 @@
                     <div class="col-8">
                         <h5>${board.title}</h5>
                         <h6>글번호: ${board.bid} | ${fn:replace(board.modTime,'T',' ')}</h6>
-                        <h6>첨부파일
                         <c:forEach var="file" items="${fileList}">
-                        	<!-- TODO: 파일 다운로드 완성 -->
-                        	<a href="/board/FileDownload?file=${file}" class="me-2" >${file}</a>
+                        	<img style="height: 200px; width: 200px" src="/file/display?fileName=${file}">
                         </c:forEach>
-                        </h6>
                         <c:if test="${(likeExist eq 0) and (not empty sessionUid) and (sessionUid ne board.uid)}">
                         <h6><a href="/board/likeCount?bid=${board.bid}&uid=${board.uid}&love=1&pre=detail">
                         	<span class="badge bg-warning"><i class="fa-regular fa-heart"></i>찜${board.likeCount}
@@ -78,6 +74,7 @@
                         	<span class="badge bg-warning"><i class="fa-regular fa-heart"></i>찜${board.likeCount}
                         </span></h6>
                         </c:if>
+                        <h6>가격 : ${board.price}</h6>
                     </div>
                     
                     <!-- 댓글기능  -->

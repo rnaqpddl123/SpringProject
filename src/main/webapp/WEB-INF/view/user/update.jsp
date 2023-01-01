@@ -23,7 +23,7 @@
                 <div class="row">
 			        <div class="col-3"></div>
 			        <div class="col-6">
-			            <form action="/SpringProject/user/update" method="post">
+			            <form action="/user/update" method="post">
 			            	<input type="hidden" name="uid" value="${user.uid}">
 			                <table class="table table-borderless">
 			                    <tr>
@@ -56,14 +56,37 @@
 			                    </tr>
 			                    <tr>
 			                        <td colspan="2" style="text-align: center;">
-			                            <input class="btn btn-primary" type="submit" value="확인">
+			                            <input class="btn btn-primary" type="submit" value="수정">
 			                            <input class="btn btn-secondary" type="reset" value="취소">
 			                        </td>
 			                    </tr>
 			                </table>
 			            </form>
+			        	<form action="/user/withdraw" method="post">
+			        		<input type="hidden" name="uid" value="${user.uid}">
+			        		<table class="table table-borderless">
+			        		<tr>
+			        			<td colspan="2">회원 탈퇴</td>
+			        		</tr>
+			        		<tr>
+			                	<td><label for="pwd">패스워드</label></td>
+			                    <td><input type="password" name="pwd"></td>
+			                </tr>
+			                <tr>
+			                    <td><label for="pwd2">패스워드 확인</label></td>
+			                    <td><input type="password" name="pwd2"></td>
+			                 </tr>
+			                 <tr>
+			                    <td colspan="2" style="text-align: center;">
+			                    	<input class="btn btn-primary" type="submit" value="회원탈퇴">
+			                 		<input class="btn btn-secondary" type="reset" value="취소">
+			                    </td>
+			                 </tr>
+			        	   </table>
+			            </form>
 			        </div>
-			        <div class="col-3"></div>
+			        <div class="col-3">
+			        </div>
 			    </div>
             </div>
             <!-- =================== main =================== -->

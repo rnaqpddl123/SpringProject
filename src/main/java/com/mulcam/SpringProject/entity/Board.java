@@ -38,6 +38,15 @@ public class Board {
 		this.uname = uname;
 	}
 	
+	public Board(int bid, String title, String content, String category, int price, String state) {
+		super();
+		this.bid = bid;
+		this.title = title;
+		this.content = content;
+		this.category = category;
+		this.price = price;
+		this.state = state;
+	}
 	public Board(String uid, String title, String content, String category, int price, String state, String files) {
 		super();
 		this.uid = uid;

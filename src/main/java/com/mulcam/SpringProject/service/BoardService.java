@@ -39,4 +39,10 @@ public interface BoardService {
 
 	void deleteReply(int rid);
 
+	void deleteBoard(int bid);
+
+	void updateBoard(Board b);
+
+	List<Board> getMyList(String uid, int offset);
+
 }

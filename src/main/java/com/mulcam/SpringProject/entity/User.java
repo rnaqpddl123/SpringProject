@@ -37,6 +37,15 @@ public class User {
 		this.phoneNum = phoneNum;
 	}
 	
+	public User(String pwd, String uname, String email, String addr, String phoneNum) {
+		super();
+		this.pwd = pwd;
+		this.uname = uname;
+		this.email = email;
+		this.addr = addr;
+		this.phoneNum = phoneNum;
+	}
+	
 	public String getUid() {
 		return uid;
 	}

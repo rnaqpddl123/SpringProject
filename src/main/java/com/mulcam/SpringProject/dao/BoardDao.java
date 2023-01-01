@@ -21,10 +21,11 @@ public interface BoardDao {
 			+ " AND ${field} LIKE #{query}"
 			+ " AND state LIKE #{state}"
 			+ " AND category LIKE #{category}"
+			+ " AND b.uid LIKE #{uid}"
 			+ "	ORDER BY bid DESC"
 			+ "	LIMIT 10"
 			+ "	OFFSET #{offset}")
-	List<Board> getlist(String field, String query, String state, String category, int offset);
+	List<Board> getlist(String uid, String field, String query, String state, String category, int offset);
 	
 	@Select("SELECT b.bid, b.uid, b.title, b.modtime, b.files, b.category, b.price, b.state,"
 			+ "	b.viewCount, b.replycount, b.likeCount, u.uname"
@@ -67,17 +68,14 @@ public interface BoardDao {
 	@Delete("DELETE FROM likeproduct WHERE uid=#{uid} AND bid=#{bid};")
 	void removeLikeBoard(String uid, int bid);
 	
-//	@Update("UPDATE board SET likeCount=likeCount+#{love} WHERE bid=#{bid};")
-//	void likeCountChange(int bid, int love);
-//
-//	@Update("UPDATE board SET replyCount=replyCount+#{count} WHERE  bid=#{bid};")
-//	void increaseReplyCount(int bid, int count);
-//	
-//	@Update("UPDATE board SET viewCount=viewCount+#{count} where bid=#{bid}")
-//	void increaseViewCount(int bid, int count);
-//	
 	@Update("UPDATE board SET ${field}=${field}+#{count} where bid=#{bid}")
 	void increaseCount(int bid, int count, String field);
+
+	@Update("UPDATE board set isDeleted=1 where bid=#{bid}")
+	void deleteBoard(int bid);
+	
+	@Update("UPDATE board set title=#{title}, content=#{content}, category=#{category}, price=#{price}, state=#{state} where bid=#{bid}")
+	void updateBoard(Board b);
 
 	
 	
