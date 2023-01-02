@@ -28,6 +28,5 @@ public interface UserService {
 	void withdraw(String uid);
 
 	List<User> getWithdrawList(String isDeleted);
-	
 
 }
