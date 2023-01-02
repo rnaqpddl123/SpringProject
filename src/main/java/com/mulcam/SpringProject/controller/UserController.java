@@ -17,7 +17,6 @@ import com.mulcam.SpringProject.entity.User;
 import com.mulcam.SpringProject.service.UserService;
 import com.mulcam.SpringProject.session.UserSession;
 
-
 @Controller
 @RequestMapping("/user")
 public class UserController {
@@ -92,6 +91,7 @@ public class UserController {
 	
 	@PostMapping("/register")
 	public String register(HttpServletRequest req, Model model) {
+		System.out.println("회원가입");
 		String uid = req.getParameter("uid").strip();
 		String pwd = req.getParameter("pwd").strip();
 		String pwd2 = req.getParameter("pwd2").strip();
@@ -128,6 +128,7 @@ public class UserController {
 	
 	@PostMapping("/update")
 	public String update(HttpServletRequest req, HttpSession session, Model model) {
+		System.out.println("확인용");
 		String uid = req.getParameter("uid").strip();
 		String pwd = req.getParameter("pwd").strip();
 		String pwd2 = req.getParameter("pwd2").strip();
@@ -141,7 +142,8 @@ public class UserController {
 			model.addAttribute("url", "/user/update/" + uid);
 			return "user/alertMsg";			
 		} else if (pwd.equals(pwd2)) {			// 패스워드가 올바른 경우
-			User u = new User(pwd, uname, email, addr, phoneNum);
+			User u = new User(uid, pwd, uname, email, addr, phoneNum);
+			System.out.println("확인용 2");
 			service.updateUser(u);
 			return "redirect:/board/list";
 		} else {								// 패스워드를 잘못 입력한 경우
@@ -155,7 +157,7 @@ public class UserController {
 	@GetMapping("/delete/{uid}")
 	public String delete(@PathVariable String uid) {
 		service.deleteUser(uid);
-		return "redirect:/user/list";
+		return "redirect:/user/list/1";
 	}
 	
 	@PostMapping("/withdraw")

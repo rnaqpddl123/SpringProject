@@ -1,6 +1,7 @@
 package com.mulcam.SpringProject.controller;
 
 import java.io.File;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -149,13 +150,14 @@ public class BoardController {
 			try {
 				// 로컬 이미지 저장
 				file.transferTo(fileName);
-			} catch (Exception e) {
+			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		}
-		
 		JSONUtill json = new JSONUtill();
-		String fileNames = json.stringfy(fileNames_);
+		String fileNames = null;
+		if (!fileNames_.get(0).equals("")) 
+			fileNames = json.stringfy(fileNames_);
 		
 		Board b = new Board(uid, title, content, category, price, state, fileNames);
 		service.write(b);

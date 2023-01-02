@@ -101,20 +101,20 @@
                                     </c:if><br>    <!-- uname, regTime-->
                                     ${fn:replace(reply.content, newline, '<br>')}  <!-- content -->
                                 </div>
-                                <!-- 댓글 수정기능 추가중  -->
+                                <!-- 댓글 수정기능 추가  -->
 		                        <form class="form-inline d-none" action="/board/replyUpdate" id="replyUpdate${loop.count}" method="post">
 					                <input type="hidden" name="bid" value="${board.bid}">     <!-- bid -->
 					                <input type="hidden" name="uid" value="${board.uid}">     <!-- uid -->
 					                <input type="hidden" name="rid" value="${reply.rid}">     <!-- rid -->
 					                <table class="table table-borderless mt-2">
 					                    <tr class="d-flex">
-					                        <td class="col-1 text-end">
+					                        <td class="col-2 text-end">
 					                            <label for="content">댓글수정</label>
 					                        </td>
-					                        <td class="col-9">
+					                        <td class="col-6">
 					                            <textarea class="form-control" id="content" name="content" rows="3">${fn:replace(reply.content, newline, '<br>')}</textarea>
 					                        </td>
-					                        <td class="col-2">
+					                        <td class="col-4">
 					                            <button type="submit" class="btn btn-primary">수정</button>
 					                            <button onclick="replyUpdate('none', ${loop.count})" class="btn btn-primary">취소</button>
 					                        </td>

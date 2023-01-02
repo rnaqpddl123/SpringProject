@@ -4,7 +4,7 @@
 	<div class="container-fluid">
        <ul class="navbar-nav">
            <a class="navbar-brand ms-5 me-5" href="#">
-               <img src="../img/ckworld-logo.png" alt="Logo" style="height:36px;" class="rounded-3">
+               <img src="/static/img/ckworld-logo.png" alt="Logo" style="height:36px;" class="rounded-3">
            </a>
            <li class="nav-item">
                <a class="nav-link" href="#"><i class="fa-solid fa-house"></i> Home</a>

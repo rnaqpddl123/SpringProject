@@ -5,7 +5,6 @@
 	<%@ include file="../common/heading.jsp" %>
     <style>
         th, td { text-align: center; }
-        .images { height: 100px; width: 100px; }
     </style>
 </head>
 
@@ -53,6 +52,10 @@
 			                        <td><input class="form-control" type="file" name="files" id="input-multiple-image" multiple></td>
 			                    </tr>
 			                    <tr>
+			                    	<td></td>
+			                    	<td id="multiple-container"></td>
+			                    </tr>
+			                    <tr>
 			                        <td><label for="content">내용</label></td>
 			                        <td colspan="2">
 			                        	<textarea class="form-control" name="content" id="content" rows="10"></textarea>
@@ -72,7 +75,6 @@
             </div>
             <!-- ================main========================= -->
         </div>
-        <div id="multiple-container"></div>
     </div>
 	<%@ include file="../common/bottom.jsp" %>
 	
@@ -86,31 +88,19 @@
 	        console.log(input.files)
 	        // 유사배열을 배열로 변환 (forEach문으로 처리하기 위해)
 	        const fileArr = Array.from(input.files)
-	        const $colDiv1 = document.createElement("td")
-	        $colDiv1.classList.add("row")
 	        fileArr.forEach((file, index) => {
 	            const reader = new FileReader()
-	            /* const $imgDiv = document.createElement("div")  */  
 	            const $img = document.createElement("img")
 	            $img.classList.add("images")
-	            const $label = document.createElement("label")
-	            $label.classList.add("image-label")
-	            /* $label.textContent = file.name */
-/* 	            $img.appendChild($img) */
-	            $img.appendChild($label)
 	            reader.onload = e => {
 	                $img.src = e.target.result
-	              /*   $imgDiv.style.width = ($img.naturalWidth) * 0.2 + "px"
-	                $imgDiv.style.height = ($img.naturalHeight) * 0.2 + "px" */
-	                $img.style.width = "200px"
-	                $img.style.height = "200px"
+	                $img.style.width = "100px"
+	                $img.style.height = "100px"
 	            }
-	            
 	            console.log(file.name)
-	            $colDiv1.appendChild($img)
+	            multipleContainer.appendChild($img)
 	            reader.readAsDataURL(file)
 	        })
-	        multipleContainer.appendChild($colDiv1)
 	    }
 	}
 	const inputMultipleImage = document.getElementById("input-multiple-image")

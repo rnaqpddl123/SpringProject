@@ -4,7 +4,6 @@
 <html>
 <head>
 	<%@ include file="../common/heading.jsp" %>
-	<meta charset="UTF-8">
 	<title>사용자 등록</title>
 </head>
 <body>

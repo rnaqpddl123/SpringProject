@@ -29,7 +29,7 @@
                 <table class="table table-sm table-borderless">
 	                <tr class="d-flex">
 	                    <td class="col-6" style="text-align: left;">
-	                        <h3><strong>찜한 상품</strong></h3>
+	                        <h3><strong>관심목록</strong></h3>
 	                    </td>
 	                </tr>
                 </table>
