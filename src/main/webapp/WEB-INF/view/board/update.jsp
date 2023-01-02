@@ -19,7 +19,7 @@
             <!-- 나머지는 공통이니까 main부분만 고치면됨 -->
             <!-- =============================main=========================== -->
             <div class="col-sm-9">
-            <h3><strong>게시글쓰기</strong></h3>
+            <h3><strong>게시글수정</strong></h3>
             <hr>
                 <div class="row">
 			        <div class="col-1"></div>

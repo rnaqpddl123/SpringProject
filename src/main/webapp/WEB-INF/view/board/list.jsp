@@ -86,8 +86,6 @@
                     </tr>
                     <c:forEach var="board" items="${boardList}">
                     <tr>
-                        <%-- <td>${board.bid}</td> --%>
-                        <%-- <td><img style="height: 50px; width: 50px" src="/file/display?fileName=${fileList[0]}"></td> --%>
                       	<td><img style="height: 50px; width: 50px" src="/file/thumbnail?jsonFiles=${board.bid}"></td>
                         <td>${board.category}</td>
                         <td>${board.state}</td>

@@ -2,10 +2,9 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
 	<%@ include file="../common/heading.jsp" %>
-	<meta charset="UTF-8">
 	<title>관리자 페이지</title>
 </head>
 <body>
